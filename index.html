@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plagiarism + Quality Checker</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- ===== Top Bar ===== -->
+    <header class="topbar">
+        <div class="container topbar__wrap">
+            <div class="brand">
+                <div class="brand__logo" aria-hidden="true">PQ</div>
+                <div class="brand__text">
+                    <strong>Plagiarism + Quality</strong>
+                    <span>Checker for Assignments</span>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="#upload">Upload</a>
+                <a href="#results">Results</a>
+                <a href="#report">Report</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== Main ===== -->
+    <main class="container">
+        <!-- Upload / Input -->
+        <section id="upload" class="card card--pad-lg">
+            <h2>Submit your assignment</h2>
+            <p class="muted">Upload a document (PDF/DOCX) or paste your text below, then click <em>Check</em> in your app logic.</p>
+
+            <div class="grid-2">
+                <!-- File Upload -->
+                <div>
+                    <label class="label">Upload document</label>
+                    <div class="dropzone" role="button" tabindex="0" aria-label="Upload file">
+                        <input type="file" id="file" name="file" accept=".pdf,.doc,.docx,.txt" />
+                        <div class="dropzone__hint">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12l-7-8-7 8h4v8h6v-8h4z"/></svg>
+                            <div>
+                                <strong>Drag & drop</strong> or click to browse
+                                <div class="muted tiny">PDF • DOC • DOCX • TXT</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paste Text -->
+                <div>
+                    <label for="text" class="label">Paste text</label>
+                    <textarea id="text" class="textarea" rows="10" placeholder="Paste your assignment text here..."></textarea>
+                </div>
+            </div>
+
+            <div class="u-flex-right">
+                <!-- This button won't do anything without JS; keep as a hook -->
+                <button class="btn" type="button" aria-disabled="true" title="Wire this to your JS">Check</button>
+            </div>
+        </section>
+
+        <!-- Results Summary -->
+        <section id="results" class="card card--pad-lg">
+            <h2>Results summary</h2>
+            <div class="cards-3">
+                <article class="kpi">
+                    <div class="kpi__head">
+                        <span>Similarity</span>
+                        <a class="link" href="#details-modal">View details</a>
+                    </div>
+                    <div class="kpi__value badge badge--danger">42%</div>
+                    <div class="progress">
+                        <div class="progress__bar" style="width: 42%"></div>
+                    </div>
+                    <div class="kpi__foot muted tiny">Lower is better</div>
+                </article>
+
+                <article class="kpi">
+                    <div class="kpi__head"><span>Quality score</span></div>
+                    <div class="kpi__value badge badge--ok">78 / 100</div>
+                    <div class="progress">
+                        <div class="progress__bar" style="width: 78%"></div>
+                    </div>
+                    <div class="kpi__foot muted tiny">Higher is better</div>
+                </article>
+
+                <article class="kpi">
+                    <div class="kpi__head"><span>Flags</span></div>
+                    <div class="kpi__value badge badge--warn">5 issues</div>
+                    <ul class="list">
+                        <li>3 exact matches</li>
+                        <li>2 paraphrase clusters</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- Matched Sources -->
+        <section id="report" class="card card--pad-lg">
+            <h2>Matched sources</h2>
+            <div class="table-wrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Source</th>
+                            <th>Type</th>
+                            <th>Overlap</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example rows; replace with backend data -->
+                        <tr>
+                            <td>1</td>
+                            <td class="ellipsis" title="https://example.com/research-paper-123">https://example.com/research-paper-123</td>
+                            <td>Web</td>
+                            <td>
+                                <div class="progress progress--thin">
+                                    <div class="progress__bar" style="width: 24%"></div>
+                                </div>
+                                <span class="tiny muted">24%</span>
+                            </td>
+                            <td><a class="chip" href="#details-modal">Open</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td title="Student submission 2023-10">Student submission 2023-10</td>
+                            <td>Institutional</td>
+                            <td>
+                                <div class="progress progress--thin">
+                                    <div class="progress__bar" style="width: 13%"></div>
+                                </div>
+                                <span class="tiny muted">13%</span>
+                            </td>
+                            <td><a class="chip" href="#details-modal">Open</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td title="“Intro to ML” textbook chapter 4">“Intro to ML” textbook chapter 4</td>
+                            <td>Book</td>
+                            <td>
+                                <div class="progress progress--thin">
+                                    <div class="progress__bar" style="width: 5%"></div>
+                                </div>
+                                <span class="tiny muted">5%</span>
+                            </td>
+                            <td><a class="chip" href="#details-modal">Open</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Quality Checks -->
+        <section class="card card--pad-lg">
+            <h2>Quality checks</h2>
+            <div class="grid-3">
+                <div class="qc">
+                    <div class="qc__head">Readability</div>
+                    <div class="progress">
+                        <div class="progress__bar" style="width: 72%"></div>
+                    </div>
+                    <div class="tiny muted">Grade level ~ 9</div>
+                </div>
+                <div class="qc">
+                    <div class="qc__head">Grammar</div>
+                    <div class="progress">
+                        <div class="progress__bar" style="width: 85%"></div>
+                    </div>
+                    <div class="tiny muted">Minor issues</div>
+                </div>
+                <div class="qc">
+                    <div class="qc__head">Clarity</div>
+                    <div class="progress">
+                        <div class="progress__bar" style="width: 66%"></div>
+                    </div>
+                    <div class="tiny muted">Some long sentences</div>
+                </div>
+            </div>
+            <ul class="list list--bullets">
+                <li><span class="pill pill--warn">Passive voice</span> appears in 7 sentences.</li>
+                <li><span class="pill">Word count</span>: 1,482 words</li>
+                <li><span class="pill">Title present</span> • <span class="pill">Headings used</span></li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <div class="container footer__wrap">
+            <span class="muted tiny">© 2025 PQ Checker</span>
+            <div class="footer__links">
+                <a href="#">Docs</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== CSS-only Modal via :target ===== -->
+    <div id="details-modal" class="modal" aria-hidden="true">
+        <a href="#" class="modal__overlay" aria-label="Close"></a>
+        <div class="modal__content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal__head">
+                <h3 id="modal-title">Match details</h3>
+                <a class="close" href="#" aria-label="Close">&times;</a>
+            </div>
+            <div class="modal__body">
+                <p class="muted tiny">Replace this placeholder with highlighted snippets and side-by-side comparison.</p>
+                <div class="compare">
+                    <div class="compare__col">
+                        <h4 class="tiny">Your text</h4>
+                        <p class="hl">The quick brown <mark>fox jumps over the lazy dog</mark> near the river bank.</p>
+                    </div>
+                    <div class="compare__col">
+                        <h4 class="tiny">Source</h4>
+                        <p class="hl"><mark>Fox jumps over the lazy dog</mark> by the riverside in the evening.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal__foot">
+                <a class="btn btn--ghost" href="#">Close</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
